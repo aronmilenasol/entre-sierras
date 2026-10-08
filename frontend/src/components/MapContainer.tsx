@@ -10,7 +10,12 @@ interface MapContainerProps {
   onZoomReady: (zoom: () => void) => void;
 }
 
-export function MapContainer({ localities, selectedLocality, onSelectLocality, onZoomReady }: MapContainerProps) {
+export function MapContainer({
+  localities,
+  selectedLocality,
+  onSelectLocality,
+  onZoomReady,
+}: MapContainerProps) {
   const mapRef = useRef<L.Map | null>(null);
   const markersRef = useRef<Map<string, L.CircleMarker>>(new Map());
 
@@ -23,7 +28,8 @@ export function MapContainer({ localities, selectedLocality, onSelectLocality, o
       }).setView([-33.3, -66.34], 7);
 
       L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+        attribution:
+          '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
         maxZoom: 19,
       }).addTo(mapRef.current);
 
@@ -46,8 +52,8 @@ export function MapContainer({ localities, selectedLocality, onSelectLocality, o
     markersRef.current.clear();
     const background = getPaletteColor('background');
     const secondary = getPaletteColor('secondary');
-    
-    localities.forEach((locality) => {
+
+    localities.forEach(locality => {
       const [longitude, latitude] = locality.coordinates;
       const marker = L.circleMarker([latitude, longitude], {
         radius: 6,
@@ -57,9 +63,10 @@ export function MapContainer({ localities, selectedLocality, onSelectLocality, o
         fillOpacity: 0.92,
       });
 
-      const popup = L.popup()
-        .setContent(`${locality.name} · ${locality.category} · ${locality.department}, ${locality.province}`);
-      
+      const popup = L.popup().setContent(
+        `${locality.name} · ${locality.category} · ${locality.department}, ${locality.province}`,
+      );
+
       marker.bindPopup(popup);
       marker.on('click', () => onSelectLocality(locality));
       marker.addTo(localityLayer);
@@ -67,7 +74,7 @@ export function MapContainer({ localities, selectedLocality, onSelectLocality, o
     });
 
     localityLayer.addTo(map);
-    
+
     if (localities.length > 0) {
       map.fitBounds(localityLayer.getBounds(), { padding: [24, 24] });
     }
@@ -91,7 +98,12 @@ export function MapContainer({ localities, selectedLocality, onSelectLocality, o
 
   return (
     <div className="relative h-[min(62vh,720px)] min-h-[430px] overflow-hidden rounded border border-text/15 bg-secondary/10">
-      <div id="map" className="h-full w-full" role="img" aria-label="Mapa interactivo de localidades" />
+      <div
+        id="map"
+        className="h-full w-full"
+        role="img"
+        aria-label="Mapa interactivo de localidades"
+      />
       <span className="absolute left-3 top-3 z-[400] flex items-center gap-1.5 rounded border border-background/90 bg-background/95 px-2 py-1.5 text-[10px] font-semibold text-secondary pointer-events-none">
         <MapPin className="h-3 w-3 text-secondary" />
         <span>Entre Sierras · {localities.length} sitios registrados</span>

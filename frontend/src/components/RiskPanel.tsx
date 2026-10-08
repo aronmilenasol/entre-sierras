@@ -29,7 +29,8 @@ export function RiskPanel({ context, loading }: RiskPanelProps) {
         <div>
           <strong className="text-xs">Incendios</strong>
           <p className="m-1 mb-1.5 text-text/70 text-[10px] leading-[1.5]">
-            Pronóstico meteorológico SMN (24, 48 y 72 h). Los focos satelitales son detecciones, no una estimación de peligro para una vivienda.
+            Pronóstico meteorológico SMN (24, 48 y 72 h). Los focos satelitales son detecciones, no
+            una estimación de peligro para una vivienda.
           </p>
           <a
             href="https://www.smn.gob.ar/indices_peligro_fuego"
@@ -59,17 +60,21 @@ export function RiskPanel({ context, loading }: RiskPanelProps) {
         <div>
           <strong className="text-xs">Inundaciones</strong>
           <p className="m-1 mb-0 text-text/70 text-[10px] leading-[1.5]">
-            {loading ? 'Consultando historial del departamento…' :
-             historical ? `${historical.department}: ${Number.isFinite(historical.flood_records) ? numberFormat.format(historical.flood_records) : 'Sin dato'} registros históricos de inundación en DESINVENTAR.` :
-             'No hay registros departamentales disponibles en DESINVENTAR.'}
+            {loading
+              ? 'Consultando historial del departamento…'
+              : historical
+                ? `${historical.department}: ${Number.isFinite(historical.flood_records) ? numberFormat.format(historical.flood_records) : 'Sin dato'} registros históricos de inundación en DESINVENTAR.`
+                : 'No hay registros departamentales disponibles en DESINVENTAR.'}
           </p>
           <small className="mb-1.5 -mt-0.5 block text-[9px] text-text/60">
             {historical?.source ?? 'IG-GIRD / IGN'}
           </small>
           <p className="m-1 mb-0 text-text/70 text-[10px] leading-[1.5]">
-            {loading ? 'Consultando exposición regional…' :
-             regional ? `${regional.region}: ${regional.classification}. Indicador regional SINAGIR, no una evaluación de la localidad.` :
-             'La capa de exposición regional SINAGIR no está disponible en este momento.'}
+            {loading
+              ? 'Consultando exposición regional…'
+              : regional
+                ? `${regional.region}: ${regional.classification}. Indicador regional SINAGIR, no una evaluación de la localidad.`
+                : 'La capa de exposición regional SINAGIR no está disponible en este momento.'}
           </p>
           <small className="mb-1.5 -mt-0.5 block text-[9px] text-text/60">
             {regional?.source ?? 'IG-GIRD / IGN'}
@@ -96,7 +101,9 @@ export function RiskPanel({ context, loading }: RiskPanelProps) {
       </article>
 
       <p className="mt-3 text-text/70 text-[10px] leading-[1.6]">
-        El historial de eventos y la exposición regional no equivalen a probabilidad actual de inundación en una parcela. GloFAS estima caudal en la celda fluvial más cercana (resolución aproximada 5 km); consultá fuentes oficiales antes de decidir.
+        El historial de eventos y la exposición regional no equivalen a probabilidad actual de
+        inundación en una parcela. GloFAS estima caudal en la celda fluvial más cercana (resolución
+        aproximada 5 km); consultá fuentes oficiales antes de decidir.
       </p>
     </section>
   );

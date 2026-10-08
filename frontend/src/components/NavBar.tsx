@@ -8,7 +8,9 @@ export function NavBar() {
   const sourcesHref = isAboutPage ? '/#fuentes' : '#fuentes';
   const [isDark, setIsDark] = useState(() => {
     const savedTheme = window.localStorage.getItem('theme');
-    return savedTheme ? savedTheme === 'dark' : window.matchMedia('(prefers-color-scheme: dark)').matches;
+    return savedTheme
+      ? savedTheme === 'dark'
+      : window.matchMedia('(prefers-color-scheme: dark)').matches;
   });
 
   useEffect(() => {
@@ -68,7 +70,11 @@ export function NavBar() {
         title={isDark ? 'Activar modo claro' : 'Activar modo nocturno'}
         onClick={() => setIsDark(theme => !theme)}
       >
-        {isDark ? <Sun className="h-4 w-4" strokeWidth={1.8} /> : <Moon className="h-4 w-4" strokeWidth={1.8} />}
+        {isDark ? (
+          <Sun className="h-4 w-4" strokeWidth={1.8} />
+        ) : (
+          <Moon className="h-4 w-4" strokeWidth={1.8} />
+        )}
         <span>{isDark ? 'Modo claro' : 'Modo nocturno'}</span>
       </button>
 

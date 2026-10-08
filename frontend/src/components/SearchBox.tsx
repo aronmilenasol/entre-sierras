@@ -15,7 +15,9 @@ export function SearchBox({ localities, province, onSelectLocality }: SearchBoxP
 
   const filteredLocalities = localities.filter(locality => {
     const normalizedQuery = normalizeText(query);
-    const normalizedLocality = normalizeText(`${locality.name} ${locality.category} ${locality.department} ${locality.municipality ?? ''}`);
+    const normalizedLocality = normalizeText(
+      `${locality.name} ${locality.category} ${locality.department} ${locality.municipality ?? ''}`,
+    );
     return normalizedLocality.includes(normalizedQuery);
   });
 
@@ -31,7 +33,7 @@ export function SearchBox({ localities, province, onSelectLocality }: SearchBoxP
       <input
         type="search"
         value={query}
-        onChange={(e) => {
+        onChange={e => {
           setQuery(e.target.value);
           setShowResults(e.target.value.length > 0);
         }}
@@ -42,7 +44,7 @@ export function SearchBox({ localities, province, onSelectLocality }: SearchBoxP
         aria-controls="search-results"
         aria-expanded={showResults}
       />
-      
+
       {showResults && (
         <div
           id="search-results"
@@ -55,7 +57,7 @@ export function SearchBox({ localities, province, onSelectLocality }: SearchBoxP
               No hay localidades coincidentes en {province}.
             </p>
           ) : (
-            filteredLocalities.map((locality) => (
+            filteredLocalities.map(locality => (
               <button
                 key={locality.id}
                 type="button"

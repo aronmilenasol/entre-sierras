@@ -22,6 +22,8 @@ jobs:
         run: python -m pytest
       - name: Install frontend dependencies
         run: npm ci --prefix frontend
+      - name: Check frontend formatting
+        run: npm run format:check --prefix frontend
       - name: Lint frontend
         run: npm run lint --prefix frontend
       - name: Build frontend
