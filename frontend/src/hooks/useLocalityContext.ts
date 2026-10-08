@@ -12,12 +12,13 @@ export function useLocalityContext() {
     const currentRequestId = ++requestId.current;
     setLoading(true);
     setError(null);
-    
+
     try {
       const data = await apiService.getLocalityContext(departmentId);
       if (requestId.current === currentRequestId) setContext(data);
     } catch (err) {
-      if (requestId.current === currentRequestId) setError(err instanceof Error ? err.message : 'Error al cargar contexto');
+      if (requestId.current === currentRequestId)
+        setError(err instanceof Error ? err.message : 'Error al cargar contexto');
     } finally {
       if (requestId.current === currentRequestId) setLoading(false);
     }

@@ -15,15 +15,15 @@ const palette = {
   },
 };
 
-const withOpacity = color => ({ opacityValue }) => opacityValue === undefined
-  ? `var(--color-${color})`
-  : `color-mix(in srgb, var(--color-${color}) ${opacityValue * 100}%, transparent)`;
+const withOpacity =
+  color =>
+  ({ opacityValue }) =>
+    opacityValue === undefined
+      ? `var(--color-${color})`
+      : `color-mix(in srgb, var(--color-${color}) ${opacityValue * 100}%, transparent)`;
 
 export default {
-  content: [
-    './index.html',
-    './src/**/*.{js,ts,jsx,tsx}',
-  ],
+  content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
   darkMode: 'class',
   theme: {
     extend: {

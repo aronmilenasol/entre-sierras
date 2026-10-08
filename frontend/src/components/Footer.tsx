@@ -1,8 +1,12 @@
 export function Footer() {
   return (
-    <footer className="mt-8 flex justify-between border-t border-text/10 py-3.5 text-[10px] text-text/65" id="fuentes">
+    <footer
+      className="mt-8 flex justify-between border-t border-text/10 py-3.5 text-[10px] text-text/65"
+      id="fuentes"
+    >
       <span>
-        Entre Sierras <span className="px-1 text-text/35">·</span> Datos geográficos de San Luis y Córdoba
+        Entre Sierras <span className="px-1 text-text/35">·</span> Datos geográficos de San Luis y
+        Córdoba
       </span>
       <span className="text-right">
         Fuentes:
