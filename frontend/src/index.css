@@ -1,0 +1,312 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --color-background: theme('colors.palette.light.background');
+  --color-text: theme('colors.palette.light.text');
+  --color-primary: theme('colors.palette.light.primary');
+  --color-secondary: theme('colors.palette.light.secondary');
+  --color-accent: theme('colors.palette.light.accent');
+}
+
+:root.dark {
+  --color-background: theme('colors.palette.dark.background');
+  --color-text: theme('colors.palette.dark.text');
+  --color-primary: theme('colors.palette.dark.primary');
+  --color-secondary: theme('colors.palette.dark.secondary');
+  --color-accent: theme('colors.palette.dark.accent');
+}
+
+@layer base {
+  * {
+    box-sizing: border-box;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    margin: 0;
+    background-color: var(--color-background);
+    color: var(--color-text);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  h1,
+  h2 {
+    color: var(--color-primary);
+  }
+
+  .leaflet-container a {
+    #mapa > div:first-child {
+      align-items: flex-end;
+      flex-wrap: wrap;
+      row-gap: 10px;
+    }
+
+    .leaflet-popup-content {
+      max-width: calc(100vw - 72px);
+    }
+    border-bottom-color: color-mix(in srgb, var(--color-text) 15%, transparent);
+    background-color: var(--color-background);
+    color: var(--color-text);
+  }
+
+  .leaflet-popup-content-wrapper,
+  .leaflet-popup-tip {
+    background: var(--color-background);
+    color: var(--color-text);
+  }
+
+  button, input {
+    font: inherit;
+  }
+
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  ::selection {
+    background: var(--color-primary);
+    color: var(--color-background);
+  }
+}
+
+@layer utilities {
+  .animate-reveal {
+    animation: reveal 0.55s ease both;
+  }
+
+  .home-hero {
+    isolation: isolate;
+    min-height: min(760px, 100svh);
+    background: #000;
+  }
+
+  .home-hero__video {
+    position: absolute;
+    z-index: -2;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0.3;
+  }
+
+  .home-hero__content {
+    animation: reveal 0.75s ease both;
+  }
+
+  @keyframes reveal {
+    from {
+      opacity: 0;
+      transform: translateY(8px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+}
+
+@media (max-width: 900px) {
+  aside.fixed {
+    inset: 0 0 auto;
+    display: flex;
+    width: 100%;
+    height: 60px;
+    flex-direction: row;
+    align-items: center;
+    gap: 8px;
+    border-right: 0;
+    border-bottom: 1px solid color-mix(in srgb, var(--color-text) 10%, transparent);
+    padding: 6px 12px;
+  }
+
+  aside.fixed > a {
+    flex: none;
+    gap: 7px;
+    padding: 4px;
+  }
+
+  aside.fixed > a > span:first-child {
+    width: 30px;
+    height: 30px;
+  }
+
+  aside.fixed nav {
+    display: flex;
+    min-width: 0;
+    flex: 1;
+    justify-content: flex-end;
+    gap: 2px;
+    overflow-x: auto;
+    overflow-y: hidden;
+  }
+
+  aside.fixed nav a {
+    min-height: 36px;
+    flex: none;
+    gap: 5px;
+    padding: 0 7px;
+    font-size: 11px;
+  }
+
+  aside.fixed nav svg {
+    width: 14px;
+    height: 14px;
+  }
+
+  aside.fixed > div:last-child {
+    display: none;
+  }
+
+  aside.fixed > button {
+    width: 36px;
+    min-height: 36px;
+    flex: none;
+    justify-content: center;
+    margin-top: 0;
+    padding: 0;
+  }
+
+  aside.fixed > button span {
+    display: none;
+  }
+
+  aside.fixed {
+    overflow: hidden;
+  }
+
+  main {
+    margin-left: 0;
+  }
+
+  #exploracion > header {
+    top: 60px;
+    padding-right: 24px;
+    padding-left: 24px;
+  }
+
+  .home-hero {
+    min-height: min(700px, calc(100svh - 60px));
+  }
+
+  .page-content {
+    padding-right: 24px;
+    padding-left: 24px;
+  }
+
+  .services-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .services-grid > section + section {
+    border-top: 1px solid color-mix(in srgb, var(--color-text) 12%, transparent);
+    border-left: 0;
+    padding: 22px 0 0;
+  }
+}
+
+@media (max-width: 600px) {
+  aside.fixed > a > span:last-child {
+    font-size: 12px;
+  }
+
+  aside.fixed nav a {
+    width: 32px;
+    justify-content: center;
+    padding: 0;
+  }
+
+  aside.fixed nav a span {
+    display: none;
+  }
+
+  #exploracion > header {
+    position: relative;
+    top: auto;
+    height: auto;
+    min-height: 62px;
+    flex-wrap: wrap;
+    gap: 10px;
+    padding: 12px 16px;
+  }
+
+  #exploracion > header > div:first-child {
+    flex-wrap: wrap;
+  }
+
+  #exploracion > header > div:last-child {
+    width: 100%;
+  }
+
+  .page-content {
+    padding: 28px 16px 20px;
+  }
+
+  .page-content h1 {
+    font-size: 40px;
+  }
+
+  .home-hero {
+    min-height: calc(100svh - 60px);
+  }
+
+  .home-hero__content {
+    padding-right: 24px;
+    padding-left: 24px;
+  }
+
+  #mapa > div:first-child h2 {
+    font-size: 19px;
+  }
+
+  #mapa > div:last-child {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  #mapa > div:first-child {
+    align-items: flex-end;
+    flex-wrap: wrap;
+    row-gap: 10px;
+  }
+
+  .leaflet-popup-content {
+    max-width: calc(100vw - 72px);
+  }
+
+  #map {
+    min-height: 360px;
+  }
+
+  .locality-panel {
+    align-items: stretch;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .locality-panel > div:last-child {
+    grid-template-columns: minmax(0, 1fr);
+    border-left: 0;
+  }
+
+  .locality-panel article {
+    border-top: 1px solid color-mix(in srgb, var(--color-text) 12%, transparent);
+    border-left: 0;
+    padding: 12px 0;
+  }
+
+  footer {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 10px;
+  }
+}

@@ -1,0 +1,407 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#f7f7f2" />
+    <meta
+      name="description"
+      content="Explora localidades de San Luis y Córdoba: territorio, servicios, clima y naturaleza en un mismo lugar."
+    />
+    <title>Entre Sierras</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,500;9..144,600&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+      integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+      crossorigin=""
+    />
+    <link rel="stylesheet" href="/static/styles.css" />
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script
+      src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+      integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+      crossorigin=""
+    ></script>
+    <script src="/static/app.js" defer></script>
+  </head>
+  <body>
+    <div class="app-shell">
+      <aside class="sidebar">
+        <a class="brand" href="#inicio" aria-label="Entre Sierras, inicio">
+          <span class="brand-mark"><i data-lucide="mountain"></i></span>
+          <span class="brand-name">Entre<span>Sierras</span></span>
+        </a>
+        <div class="sidebar-caption">SAN LUIS Y CÓRDOBA</div>
+        <nav class="side-nav" aria-label="Navegación principal">
+          <a class="nav-link is-active" href="#inicio"
+            ><i data-lucide="map"></i><span>Mapa regional</span></a
+          >
+          <a class="nav-link" href="#fuentes"
+            ><i data-lucide="database"></i><span>Datos y fuentes</span></a
+          >
+          <a class="nav-link" href="./acerca.html"
+            ><i data-lucide="info"></i><span>Acerca de</span></a
+          >
+        </nav>
+        <div class="sidebar-foot">
+          <span class="status-dot"></span>
+          <span>Explorando San Luis y Córdoba</span>
+          <span class="province-mark">ES</span>
+        </div>
+      </aside>
+
+      <main id="inicio" class="main-content">
+        <header class="topbar">
+          <div class="breadcrumb">
+            <span>Argentina</span><i data-lucide="chevron-right"></i
+            ><strong>San Luis y Córdoba</strong
+            ><span id="locality-count" class="locality-count"
+              >Cargando localidades</span
+            >
+          </div>
+          <div class="search-box">
+            <i data-lucide="search"></i>
+            <input
+              id="locality-search"
+              type="search"
+              placeholder="Buscar entre las localidades de San Luis y Córdoba"
+              aria-label="Buscar localidad"
+              autocomplete="off"
+              aria-controls="search-results"
+              aria-expanded="false"
+            />
+            <div
+              id="search-results"
+              class="search-results"
+              role="listbox"
+              aria-label="Localidades de San Luis y Córdoba"
+              hidden
+            ></div>
+          </div>
+        </header>
+
+        <div class="page-wrap">
+          <div class="place-heading explorer-heading">
+            <div>
+              <div class="eyebrow">
+                <span class="eyebrow-dot"></span> EXPLORADOR PROVINCIAL
+                <span class="eyebrow-rule"></span> ARGENTINA
+              </div>
+              <h1>San Luis y Córdoba</h1>
+              <p class="place-subtitle">
+                Explorá localidades, población y relieve sobre el mapa.
+              </p>
+            </div>
+            <button
+              class="share-button"
+              id="share-button"
+              type="button"
+              aria-label="Compartir esta vista"
+              title="Compartir mapa"
+            >
+              <i data-lucide="share-2"></i>
+            </button>
+          </div>
+
+          <section
+            class="map-column province-map"
+            id="ubicacion"
+            aria-labelledby="map-title"
+          >
+            <div class="map-heading">
+              <div>
+                <span class="section-kicker">MAPA INTERACTIVO</span>
+                <h2 id="map-title">Localidades de San Luis y Córdoba</h2>
+              </div>
+              <button
+                class="map-expand"
+                id="map-expand"
+                type="button"
+                aria-label="Acercar el mapa"
+                title="Acercar mapa"
+              >
+                <i data-lucide="zoom-in"></i>
+              </button>
+            </div>
+            <div class="map-frame">
+              <div
+                id="map"
+                role="img"
+                aria-label="Mapa interactivo con localidades de San Luis y Córdoba"
+              ></div>
+              <span class="map-label"
+                ><i data-lucide="map-pin"></i>
+                <span
+                  >San Luis y Córdoba ·
+                  <span id="map-locality-count">0</span> localidades</span
+                ></span
+              >
+            </div>
+            <div class="map-meta">
+              <span
+                ><span class="coordinate-dot"></span
+                ><span id="map-status"
+                  >Seleccioná un punto para ver sus datos</span
+                ></span
+              ><a
+                id="external-map-link"
+                href="https://www.openstreetmap.org/#map=7/-33.3/-66.34"
+                target="_blank"
+                rel="noreferrer"
+                >Abrir en OpenStreetMap <i data-lucide="arrow-up-right"></i
+              ></a>
+            </div>
+          </section>
+
+          <section
+            class="locality-panel"
+            id="datos"
+            aria-labelledby="place-name"
+            aria-live="polite"
+            hidden
+          >
+            <div class="locality-panel-heading">
+              <div>
+                <span class="section-kicker" id="place-department"
+                  >SAN LUIS Y CÓRDOBA</span
+                >
+                <h2 id="place-name">Seleccioná una localidad</h2>
+              </div>
+              <span class="place-coordinates" id="place-coordinates"></span>
+            </div>
+            <div class="locality-facts">
+              <article class="locality-fact">
+                <span class="metric-label">POBLACIÓN</span
+                ><strong class="metric-value" id="place-population">-</strong
+                ><span class="metric-note" id="population-source"
+                  >Censo 2022</span
+                >
+              </article>
+              <article class="locality-fact">
+                <span class="metric-label">ALTITUD</span
+                ><strong class="metric-value" id="place-elevation">-</strong
+                ><span class="metric-note" id="elevation-source"
+                  >Elevación estimada del terreno</span
+                >
+              </article>
+            </div>
+          </section>
+
+          <section
+            class="living-guide"
+            id="vida-local"
+            aria-label="Servicios y condiciones para vivir"
+            hidden
+          >
+            <section class="nearby-services" aria-labelledby="services-title">
+              <div class="section-heading">
+                <div>
+                  <span class="section-kicker">A TU ALREDEDOR</span>
+                  <h2 id="services-title">Servicios cercanos</h2>
+                </div>
+                <label class="service-filter-label" for="service-filter"
+                  >Categoría</label
+                >
+                <select
+                  id="service-filter"
+                  aria-label="Filtrar servicios cercanos"
+                >
+                  <option value="all">Todos</option>
+                  <option value="health">Salud</option>
+                  <option value="shopping">Compras</option>
+                  <option value="education">Educación</option>
+                  <option value="safety">Emergencias</option>
+                  <option value="nature">Naturaleza</option>
+                  <option value="transport">Transporte</option>
+                  <option value="other">Otros</option>
+                </select>
+                <button
+                  class="service-retry"
+                  id="service-retry"
+                  type="button"
+                  aria-label="Volver a consultar servicios cercanos"
+                  title="Reintentar consulta"
+                  hidden
+                >
+                  <i data-lucide="refresh-cw"></i>
+                </button>
+              </div>
+              <div class="nearest-hospital" id="nearest-hospital" hidden>
+                <span class="nearest-hospital-icon"
+                  ><i data-lucide="heart-pulse"></i
+                ></span>
+                <span
+                  ><small>HOSPITAL MÁS CERCANO · HASTA 50 KM</small
+                  ><strong id="nearest-hospital-name"></strong
+                  ><span id="nearest-hospital-distance"></span
+                ></span>
+                <a
+                  id="nearest-hospital-link"
+                  href="https://www.openstreetmap.org/"
+                  target="_blank"
+                  rel="noreferrer"
+                  aria-label="Ver hospital en OpenStreetMap"
+                  ><i data-lucide="arrow-up-right"></i
+                ></a>
+              </div>
+              <p class="service-status" id="service-status" role="status">
+                Seleccioná una localidad para consultar servicios.
+              </p>
+              <ul
+                class="service-list"
+                id="service-list"
+                aria-live="polite"
+              ></ul>
+              <p class="service-attribution">
+                Salud: IGN/SISA · Escuelas: Mapa Educativo Nacional/IGN ·
+                Comercios y espacios públicos: OpenStreetMap. La cobertura puede
+                ser incompleta.
+              </p>
+            </section>
+
+            <section class="risk-panel" aria-labelledby="risk-title">
+              <div class="section-heading">
+                <div>
+                  <span class="section-kicker">PREVENCIÓN</span>
+                  <h2 id="risk-title">Riesgos y alertas</h2>
+                </div>
+              </div>
+              <article class="risk-item">
+                <span class="risk-icon fire"><i data-lucide="flame"></i></span>
+                <div>
+                  <strong>Incendios</strong>
+                  <p>
+                    Pronóstico meteorológico SMN (24, 48 y 72 h). Los focos
+                    satelitales son detecciones, no una estimación de peligro
+                    para una vivienda.
+                  </p>
+                  <a
+                    href="https://www.smn.gob.ar/indices_peligro_fuego"
+                    target="_blank"
+                    rel="noreferrer"
+                    >Índice de peligro SMN
+                    <i data-lucide="arrow-up-right"></i></a
+                  ><a
+                    href="https://firms.modaps.eosdis.nasa.gov/map/"
+                    target="_blank"
+                    rel="noreferrer"
+                    >Focos activos NASA FIRMS
+                    <i data-lucide="arrow-up-right"></i
+                  ></a>
+                </div>
+              </article>
+              <article class="risk-item">
+                <span class="risk-icon flood"><i data-lucide="waves"></i></span>
+                <div>
+                  <strong>Inundaciones</strong>
+                  <p id="department-risk-summary">
+                    Historial departamental: seleccioná una localidad.
+                  </p>
+                  <small class="risk-source" id="department-risk-source"
+                    >IG-GIRD / IGN</small
+                  >
+                  <p id="regional-risk-summary">
+                    Exposición regional SINAGIR: seleccioná una localidad.
+                  </p>
+                  <small class="risk-source" id="regional-risk-source"
+                    >IG-GIRD / IGN</small
+                  ><a
+                    href="https://riesgo.ign.gob.ar/mapa/"
+                    target="_blank"
+                    rel="noreferrer"
+                    >Visor de riesgo IG-GIRD
+                    <i data-lucide="arrow-up-right"></i></a
+                  ><a
+                    href="https://open-meteo.com/en/docs/flood-api"
+                    target="_blank"
+                    rel="noreferrer"
+                    >Caudal fluvial GloFAS <i data-lucide="arrow-up-right"></i
+                  ></a>
+                </div>
+              </article>
+              <p class="risk-disclaimer">
+                El historial de eventos y la exposición regional no equivalen a
+                probabilidad actual de inundación en una parcela. GloFAS estima
+                caudal en la celda fluvial más cercana (resolución aproximada 5
+                km); consultá fuentes oficiales antes de decidir.
+              </p>
+            </section>
+          </section>
+
+          <p class="source-note" id="source-status" role="status">
+            Cargando el catálogo provincial…
+          </p>
+          <footer class="page-footer" id="fuentes">
+            <span
+              >Entre Sierras <span class="footer-separator">·</span> Datos
+              geográficos de San Luis y Córdoba</span
+            ><span class="data-sources"
+              >Fuentes:
+              <a
+                href="https://www.argentina.gob.ar/georef"
+                target="_blank"
+                rel="noreferrer"
+                >Georef</a
+              >
+              ·
+              <a
+                href="https://www.indec.gob.ar/indec/web/Nivel4-Tema-2-41-165"
+                target="_blank"
+                rel="noreferrer"
+                >INDEC</a
+              >
+              ·
+              <a
+                href="https://riesgo.ign.gob.ar/"
+                target="_blank"
+                rel="noreferrer"
+                >IG-GIRD/IGN</a
+              >
+              ·
+              <a
+                href="https://www.argentina.gob.ar/educacion/evaluacion-e-informacion-educativa/padron-oficial-de-establecimientos-educativos"
+                target="_blank"
+                rel="noreferrer"
+                >Mapa Educativo</a
+              >
+              ·
+              <a
+                href="https://www.smn.gob.ar/indices_peligro_fuego"
+                target="_blank"
+                rel="noreferrer"
+                >SMN</a
+              >
+              ·
+              <a
+                href="https://firms.modaps.eosdis.nasa.gov/"
+                target="_blank"
+                rel="noreferrer"
+                >NASA FIRMS</a
+              >
+              ·
+              <a
+                href="https://open-meteo.com/en/docs/elevation-api"
+                target="_blank"
+                rel="noreferrer"
+                >Open-Meteo</a
+              >
+              ·
+              <a
+                href="https://www.openstreetmap.org/copyright"
+                target="_blank"
+                rel="noreferrer"
+                >OpenStreetMap</a
+              ></span
+            >
+          </footer>
+        </div>
+      </main>
+    </div>
+  </body>
+</html>
