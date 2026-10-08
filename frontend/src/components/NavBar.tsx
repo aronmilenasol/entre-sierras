@@ -41,7 +41,7 @@ export function NavBar() {
           <span>Inicio</span>
         </a>
         <a
-          className="flex min-h-10 items-center gap-2.5 rounded bg-secondary/10 px-2.5 text-secondary font-medium text-sm"
+          className={`flex min-h-10 items-center gap-2.5 rounded px-2.5 text-sm ${isAboutPage ? 'text-secondary transition-colors hover:bg-secondary/10 hover:text-accent' : 'bg-secondary/10 text-secondary font-medium'}`}
           href={mapHref}
         >
           <Map className="h-4 w-4" strokeWidth={1.8} />
@@ -55,7 +55,7 @@ export function NavBar() {
           <span>Datos y fuentes</span>
         </a>
         <a
-          className="flex min-h-10 items-center gap-2.5 rounded px-2.5 text-secondary text-sm transition-colors hover:bg-secondary/10 hover:text-accent"
+          className={`flex min-h-10 items-center gap-2.5 rounded px-2.5 text-sm ${isAboutPage ? 'bg-secondary/10 text-secondary font-medium' : 'text-secondary transition-colors hover:bg-secondary/10 hover:text-accent'}`}
           href="/acerca.html"
         >
           <Info className="h-4 w-4" strokeWidth={1.8} />
